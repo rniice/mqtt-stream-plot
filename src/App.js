@@ -25,6 +25,36 @@ class App extends Component {
           range_y={[0,6]}
           line_color={'#F00'}
         />
+        <Plot2DLinesBasic
+          mqtt_topic="/Transporter/Powdersol"
+          range_x={[0,100]}
+          range_y={[0,6]}
+          line_color={'#F00'}
+        />
+        <Plot2DLinesBasic
+          mqtt_topic="/Transporter/Powdersol"
+          range_x={[0,100]}
+          range_y={[0,6]}
+          line_color={'#F00'}
+        />
+        <Plot2DLinesBasic
+          mqtt_topic="/Transporter/Powdersol"
+          range_x={[0,100]}
+          range_y={[0,6]}
+          line_color={'#F00'}
+        />
+        <Plot2DLinesBasic
+          mqtt_topic="/Transporter/Powdersol"
+          range_x={[0,100]}
+          range_y={[0,6]}
+          line_color={'#F00'}
+        />
+        <Plot2DLinesBasic
+          mqtt_topic="/Transporter/Powdersol"
+          range_x={[0,100]}
+          range_y={[0,6]}
+          line_color={'#F00'}
+        />
 
       </div>
     );

@@ -36,7 +36,7 @@ class Plot2DLinesBasic extends React.Component {
         next_state.trace1.y.push(Math.floor(Math.random() * (10-5)) + 5);
         next_state.trace2.y.push(Math.floor(Math.random() * (10-5)) + 5);
         that.setState(next_state);
-      }, 2000);
+      }, 500);
     }
 
     this.updateComponent();
