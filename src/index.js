@@ -6,10 +6,12 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 ReactDOM.render(
-  <Connector mqttProps="ws://test.mosca.io/">
+  <Connector mqttProps="mqtt://broker.hivemq.com:8000">
     <App />
   </Connector>,
   document.getElementById('root')
 );
 
 registerServiceWorker();
+
+/*<Connector mqttProps="mqtt://broker.mqttdashboard.com">*/
