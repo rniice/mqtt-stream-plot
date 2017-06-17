@@ -5,9 +5,10 @@
   "dependencies": {
     "mqtt-react": "0.0.3",
     "plotly.js": "^1.27.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-plotlyjs": "^0.4.1"
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-plotlyjs": "^0.4.1",
+    "react-scripts": "^1.0.7"
   },
   "devDependencies": {
     "react-scripts": "1.0.7"
