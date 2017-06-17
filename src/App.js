@@ -23,7 +23,7 @@ class App extends Component {
         <Plot2DLinesBasic
           mqtt_topic="/Transporter/Powdersol"
           range_x={[0,100]}
-          range_y={[0,6]}
+          range_y={[0,10]}
           line_color={'#F00'}
         />
 

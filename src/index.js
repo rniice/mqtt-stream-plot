@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 ReactDOM.render(
-  <Connector mqttProps="mqtt://broker.hivemq.com:8000">
+  <Connector mqttProps="ws://broker.mqttdashboard.com:8000">
     <App />
   </Connector>,
   document.getElementById('root')

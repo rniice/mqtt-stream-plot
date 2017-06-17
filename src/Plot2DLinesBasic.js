@@ -25,6 +25,10 @@ class Plot2DLinesBasic extends React.Component {
         y: [],
         type: 'scatter'
       },
+      layout: {
+        xaxis: {range: [props.range_x[0], props.range_x[1]]},
+        yaxis: {range: [props.range_y[0], props.range_y[1]]}
+      },
       config: null
     };
 
@@ -33,10 +37,10 @@ class Plot2DLinesBasic extends React.Component {
       var that = this;
       setInterval(function(){
         var next_state = that.state;
-        next_state.trace1.y.push(Math.floor(Math.random() * (10-8)) + 8);
+        next_state.trace1.y.push(Math.floor(Math.random() * (10-5)) + 5);
         next_state.trace2.y.push(Math.floor(Math.random() * (10-8)) + 8);
         that.setState(next_state);
-      }, 2000);
+      }, 1000);
     }
 
     this.updateComponent();
@@ -45,7 +49,7 @@ class Plot2DLinesBasic extends React.Component {
 
   render() {
     let data_plot =  [this.state.trace1, this.state.trace2];
-
+    let layout = this.state.layout;
     // Messages are passed on the "data" prop
     const MessageList = (props) => (
       <ul>
@@ -67,6 +71,7 @@ class Plot2DLinesBasic extends React.Component {
 
         <PlotlyComponent
           data={data_plot}
+          layout = {layout}
           //data={[this.state.trace1, this.state.trace2]}
           config={this.state.config}
         />
