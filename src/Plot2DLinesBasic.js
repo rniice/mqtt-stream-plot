@@ -6,9 +6,14 @@ import EventEmitter from 'eventemitter3';
 const PlotlyComponent = createPlotlyComponent(Plotly);
 
 class Plot2DLinesBasic extends React.Component {
-//const Plot2DLinesBasic = ({ results }) => {
+
   constructor(props) {
+
     super(props);
+
+    //initiate the event emitter
+    this.eventEmitter = new EventEmitter();
+    
     this.state = {
       mqtt_topic:       props.mqtt_topic,
       range_x:          props.range_x,

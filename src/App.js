@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import EventEmitter from 'eventemitter3';
 import Plot2DLinesBasic from './Plot2DLinesBasic';
 import MQTTListener from './MQTTListener';
-import { Button } from 'react-bootstrap';
+import { Button, BootstrapTable, TableHeaderColumn } from 'react-bootstrap';
 
 
 import './App.css';
