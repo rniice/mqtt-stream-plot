@@ -4,7 +4,6 @@ import Plot2DLinesBasic from './Plot2DLinesBasic';
 import MQTTListener from './MQTTListener';
 import { Button, BootstrapTable, TableHeaderColumn } from 'react-bootstrap';
 
-
 import './App.css';
 
 //test using http://mitsuruog.github.io/what-mqtt/

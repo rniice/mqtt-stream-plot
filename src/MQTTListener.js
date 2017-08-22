@@ -68,12 +68,12 @@ class MQTTListener extends React.Component {
 
     return (
       <div>
-        <BootstrapTable data={ data_header } cellEdit={ cellEditProp } insertRow={ true } style={ tableStyle }>
+        <BootstrapTable data={ data_header } cellEdit={ cellEditProp } insertRow={ false } style={ tableStyle }>
             <TableHeaderColumn dataField='host' isKey={ true }>Broker</TableHeaderColumn>
             <TableHeaderColumn dataField='topic' editable={ false }>Topic</TableHeaderColumn>
         </BootstrapTable>
 
-        <BootstrapTable data={ data_sensors } cellEdit={ cellEditProp } insertRow={ true } style={ tableStyle }>
+        <BootstrapTable data={ data_sensors } cellEdit={ cellEditProp } insertRow={ false } style={ tableStyle }>
             <TableHeaderColumn dataField='sensor' isKey={ true }>Sensor</TableHeaderColumn>
             <TableHeaderColumn dataField='temp' editable={ false }>Temp [degC]</TableHeaderColumn>
             <TableHeaderColumn dataField='hum'>Humidity</TableHeaderColumn>
