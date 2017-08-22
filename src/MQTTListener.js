@@ -1,5 +1,7 @@
 import React from 'react';
 import MQTT from 'mqtt';
+import _ from 'lodash';
+
 import { Button } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -17,7 +19,7 @@ class MQTTListener extends React.Component {
     this.state = {
       host:             props.host,
       topic:            props.topic,
-      message:          ""
+      message:          null
     };
 
     this.client         = MQTT.connect(this.state.host);
@@ -41,7 +43,19 @@ class MQTTListener extends React.Component {
 
   render() {
 
-    var data = [{ host: this.state.host, topic: this.state.topic, message: this.state.message }];
+    var data_header = [ { host: this.state.host, topic: this.state.topic } ];
+    var data_sensors_json = JSON.parse(this.state.message);
+    var data_sensors = null;
+    console.log(data_sensors_json);
+
+    if(data_sensors_json){
+      data_sensors = [
+        {sensor: 'HT1', temp: data_sensors_json['HT1'].temp, hum: data_sensors_json['HT1'].hum},
+        {sensor: 'HT2', temp: data_sensors_json['HT2'].temp, hum: data_sensors_json['HT2'].hum},
+        {sensor: 'HT3', temp: data_sensors_json['HT3'].temp, hum: data_sensors_json['HT3'].hum},
+        {sensor: 'HT4', temp: data_sensors_json['HT4'].temp, hum: data_sensors_json['HT4'].hum}
+      ];
+    }
 
     const tableStyle = {
       margin: "0 auto",
@@ -54,11 +68,17 @@ class MQTTListener extends React.Component {
 
     return (
       <div>
-        <BootstrapTable data={ data } cellEdit={ cellEditProp } insertRow={ true } style={ tableStyle }>
+        <BootstrapTable data={ data_header } cellEdit={ cellEditProp } insertRow={ true } style={ tableStyle }>
             <TableHeaderColumn dataField='host' isKey={ true }>Broker</TableHeaderColumn>
             <TableHeaderColumn dataField='topic' editable={ false }>Topic</TableHeaderColumn>
-            <TableHeaderColumn dataField='message'>Message</TableHeaderColumn>
         </BootstrapTable>
+
+        <BootstrapTable data={ data_sensors } cellEdit={ cellEditProp } insertRow={ true } style={ tableStyle }>
+            <TableHeaderColumn dataField='sensor' isKey={ true }>Sensor</TableHeaderColumn>
+            <TableHeaderColumn dataField='temp' editable={ false }>Temp [degC]</TableHeaderColumn>
+            <TableHeaderColumn dataField='hum'>Humidity</TableHeaderColumn>
+        </BootstrapTable>
+
       </div>
 
     );

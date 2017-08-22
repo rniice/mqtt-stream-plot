@@ -15,7 +15,7 @@ class App extends Component {
       <div className="App">
 
         <Button bsStyle="success" bsSize="small" onClick={function(){console.log("button clicked");} }>
-          Something
+          Test Button
         </Button>
 
         <MQTTListener

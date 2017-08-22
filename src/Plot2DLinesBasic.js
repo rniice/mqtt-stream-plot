@@ -13,7 +13,7 @@ class Plot2DLinesBasic extends React.Component {
 
     //initiate the event emitter
     this.eventEmitter = new EventEmitter();
-    
+
     this.state = {
       mqtt_topic:       props.mqtt_topic,
       range_x:          props.range_x,
