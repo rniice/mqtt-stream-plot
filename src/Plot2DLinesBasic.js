@@ -1,7 +1,6 @@
 import React from 'react';
 import createPlotlyComponent from 'react-plotlyjs';
 import Plotly from 'plotly.js/dist/plotly-gl2d';
-import { subscribe } from 'mqtt-react';
 //https://www.npmjs.com/package/mqtt-react
 
 const PlotlyComponent = createPlotlyComponent(Plotly);
@@ -11,14 +10,22 @@ class Plot2DLinesBasic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mqtt_topic:   props.mqtt_topic,
-      range_x:      props.range_x,
-      range_y:      props.range_y,
-      line_color:   props.line_color,
+      mqtt_topic:       props.mqtt_topic,
+      range_x:          props.range_x,
+      range_y:          props.range_y,
+      line_color:       props.line_color,
+      data_points_show: props.data_points_show,
       trace1: {
         /*x: [1, 2, 3, 4],*/
         y: [],
-        type: 'scatter'
+        type: 'scatter',
+        mode: "line",
+        name: 'woot',
+        line: {
+          color: "rgba(100, 0, 0, 0.6)",
+          sizemin: 0.2,
+          sizemax: 0.5
+        }
       },
       trace2: {
         /*x: [1, 2, 3, 4],*/
@@ -26,8 +33,8 @@ class Plot2DLinesBasic extends React.Component {
         type: 'scatter'
       },
       layout: {
-        xaxis: {range: [props.range_x[0], props.range_x[1]]},
-        yaxis: {range: [props.range_y[0], props.range_y[1]]}
+        xaxis: {range: [props.range_x[0], props.range_x[1]] /*, autorange: true */},
+        yaxis: {range: [props.range_y[0], props.range_y[1]] /*, autorange: true */}
       },
       config: null
     };
@@ -37,10 +44,20 @@ class Plot2DLinesBasic extends React.Component {
       var that = this;
       setInterval(function(){
         var next_state = that.state;
-        next_state.trace1.y.push(Math.floor(Math.random() * (10-5)) + 5);
-        next_state.trace2.y.push(Math.floor(Math.random() * (10-8)) + 8);
+        next_state.trace1.y.push(Math.random() * (10-8) + 8);
+        next_state.trace2.y.push(Math.random() * (6-5) + 5);
+
+        //prune state to selected show range
+        if(next_state.trace1.y.length > that.state.data_points_show){
+          //console.log(next_state.trace1.y.length);
+          next_state.trace1.y = next_state.trace1.y.slice(-that.state.data_points_show);
+        }
+        if(next_state.trace2.y.length > that.state.data_points_show){
+          next_state.trace2.y = next_state.trace2.y.slice(-that.state.data_points_show);
+        }
+
         that.setState(next_state);
-      }, 1000);
+      }, 20);
     }
 
     this.updateComponent();
@@ -50,17 +67,6 @@ class Plot2DLinesBasic extends React.Component {
   render() {
     let data_plot =  [this.state.trace1, this.state.trace2];
     let layout = this.state.layout;
-    // Messages are passed on the "data" prop
-    const MessageList = (props) => (
-      <ul>
-        {props.data.map( message => <li>{message}</li> )}
-      </ul>
-    );
-
-    // simple subscription to messages on the "@test/demo" topic
-    subscribe({
-      topic: '@demo/test'
-    })(MessageList);
 
     return (
       <div>
@@ -72,7 +78,6 @@ class Plot2DLinesBasic extends React.Component {
         <PlotlyComponent
           data={data_plot}
           layout = {layout}
-          //data={[this.state.trace1, this.state.trace2]}
           config={this.state.config}
         />
       </div>

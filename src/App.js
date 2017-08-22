@@ -1,33 +1,20 @@
 import React, { Component } from 'react';
 import Plot2DLinesBasic from './Plot2DLinesBasic';
-import TestMQTTComponent from './TestMQTTComponent';
-//import logo from './logo.svg';
+
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        {/*
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        */}
-        {/*
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        */}
 
         <Plot2DLinesBasic
           mqtt_topic="/Transporter/Powdersol"
-          range_x={[0,100]}
+          range_x={[0,300]}
           range_y={[0,10]}
-          line_color={'#F00'}
+          line_color={'#FF0'}
+          data_points_show={300}
         />
-
-        <TestMQTTComponent />
 
       </div>
     );
