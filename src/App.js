@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import EventEmitter from 'eventemitter3';
 import Plot2DLinesBasic from './Plot2DLinesBasic';
 import MQTTListener from './MQTTListener';
+import { Button } from 'react-bootstrap';
+
 
 import './App.css';
 
@@ -12,9 +14,13 @@ class App extends Component {
     return (
       <div className="App">
 
+        <Button bsStyle="success" bsSize="small" onClick={function(){console.log("button clicked");} }>
+          Something
+        </Button>
+
         <MQTTListener
-          host={'ws://test.mosquitto.org:8080/mqtt'}
-          topic={"root"}
+          host={'ws://scottydb.vcs.rd.hpicorp.net:8083'}
+          topic={'/Transporter/Live/vulcanbb1xm002/Status/Data'}
         />
 
         <Plot2DLinesBasic

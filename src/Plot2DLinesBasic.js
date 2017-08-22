@@ -70,10 +70,10 @@ class Plot2DLinesBasic extends React.Component {
 
     return (
       <div>
-        <p>Plot MQTT Topic is: {this.state.mqtt_topic} </p>
+        {/*<p>Plot MQTT Topic is: {this.state.mqtt_topic} </p>
         <p>Plot RangeX is: {this.state.range_x.toString()} </p>
         <p>Plot RangeY is: {this.state.range_y.toString()} </p>
-        <p>Plot Stroke Color is: {this.state.line_color} </p>
+        <p>Plot Stroke Color is: {this.state.line_color} </p>*/}
 
         <PlotlyComponent
           data={data_plot}

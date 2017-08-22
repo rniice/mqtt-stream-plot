@@ -21,11 +21,11 @@ class MQTTListener extends React.Component {
       //this is within the client scope
       console.log("connection established: " + that.state.host);
       //loop through and subscribe to all topics in array this.topic
-      this.subscribe("woot");
+      this.subscribe(that.state.topic);
     });
 
     this.client.on('message', function(topic, message){
-      //console.log(message.toString());
+      console.log("topic: " + topic.toString() + "message: " + message.toString());
       that.setState({message: message.toString()});
     });
 
@@ -35,7 +35,7 @@ class MQTTListener extends React.Component {
 
     return (
       <div>
-        <p>Broker is: {this.state.broker} </p>
+        <p>Broker is: {this.state.host} </p>
         <p>Topic is: {this.state.topic} </p>
         <p>Message is: {this.state.message} </p>
       </div>
