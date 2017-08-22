@@ -1,7 +1,7 @@
 import React from 'react';
 import createPlotlyComponent from 'react-plotlyjs';
 import Plotly from 'plotly.js/dist/plotly-gl2d';
-//https://www.npmjs.com/package/mqtt-react
+import EventEmitter from 'eventemitter3';
 
 const PlotlyComponent = createPlotlyComponent(Plotly);
 
