@@ -20,6 +20,12 @@ class Plot2DLinesBasic extends React.Component {
       range_y:          props.range_y,
       line_color:       props.line_color,
       data_points_show: props.data_points_show,
+      sensors:          props.sensors,
+
+      traces:           props.sensors.map(function(item){
+        return { y:[], type: 'scatter', name: item} ;
+      }),
+
       trace1: {
         /*x: [1, 2, 3, 4],*/
         y: [],
@@ -46,13 +52,34 @@ class Plot2DLinesBasic extends React.Component {
     };
 
     // create a function to subscribe to topics
+    /*
     this.receiveNewData = function (msg, data) {
-      console.log("from Plot2DLinesBasic Listener: " + data );
-      //parse out the data
 
+      let next_state  = that.state;
+      let next_traces = that.state.traces;
+      //console.log(JSON.stringify(next_traces));
+
+      for (let i = 0; i < data.length; i++ ) {
+          let sensor_name = data[i].sensor;
+          let sensor_value = data[i].value;
+          //console.log(sensor_name);
+
+          next_traces[i].y.push(sensor_value);
+          if(next_traces[i].y.length > that.state.data_points_show){
+            next_traces[i].y =next_traces[i].y.slice(-that.state.data_points_show);
+          }
+          //console.log(next_traces[i]);
+      }
+
+      //update the state traces to the traces next_state variable
+      next_state.traces = next_traces;
+      that.setState( next_state );
     };
+    */
+
 
     this.updateComponent = function (){
+
       setInterval(function(){
         var next_state = that.state;
         next_state.trace1.y.push(Math.random() * (10-8) + 8);
@@ -68,22 +95,24 @@ class Plot2DLinesBasic extends React.Component {
         }
 
         that.setState(next_state);
-      }, 20);
+
+      }, 100);
     }
 
     this.updateComponent();
+
 
   }
 
 
   componentDidMount() {
     console.log("mounted Plot2DLinesBasic"); //tell us it mounted
-    PubSub.subscribe( this.state.topic, this.receiveNewData );
-    //this.on("test", console.log("received test event"));
+    //PubSub.subscribe( this.state.topic, this.receiveNewData );
   };
 
   render() {
-    let data_plot =  [this.state.trace1, this.state.trace2];
+    //let traces =  this.state.traces;
+    let traces =  [this.state.trace1, this.state.trace2];
     let layout = this.state.layout;
 
     return (
@@ -94,7 +123,7 @@ class Plot2DLinesBasic extends React.Component {
         <p>Plot Stroke Color is: {this.state.line_color} </p>*/}
 
         <PlotlyComponent
-          data={data_plot}
+          data={traces}
           layout = {layout}
           config={this.state.config}
         />

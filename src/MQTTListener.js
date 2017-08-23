@@ -24,7 +24,7 @@ class MQTTListener extends React.Component {
 
     // create a function to subscribe to topics
     this.sendNewData = function (msg, data) {
-        console.log("from MQTT Listener: " + data );
+        //console.log("from MQTT Listener: " + data );
     };
 
     this.client         = MQTT.connect(this.state.host);

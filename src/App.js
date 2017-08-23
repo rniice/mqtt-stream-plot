@@ -47,6 +47,7 @@ class App extends Component {
           range_y={[0,10]}
           line_color={'#FF0'}
           data_points_show={300}
+          sensors={['a1','a2','a3','a4','a5','a6','a7','a8']}
         />
 
       </div>
