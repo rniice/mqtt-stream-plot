@@ -21,31 +21,27 @@ class MQTTListener extends React.Component {
     };
 
     // create a function to subscribe to topics
-    this.mySubscriber = function (msg, data) {
+    this.sendNewData = function (msg, data) {
         console.log("from MQTT Listener: " + data );
     };
 
     this.client         = MQTT.connect(this.state.host);
-
     this.client.on('connect', function(){
       //this is within the client scope
       console.log("connection established: " + that.state.host);
       //loop through and subscribe to all topics in array this.topic
       this.subscribe(that.state.topic);
     });
-
     this.client.on('message', function(topic, message){
       that.setState({message: message.toString()});
-
-      // publish a topic asyncronously
-      PubSub.publish( 'test', message.toString() );
+      PubSub.publish( that.state.topic, message.toString() );        // publish a topic asyncronously
     });
 
   }
 
   componentDidMount() {
     console.log("mounted MQTTListener"); //tell us it mounted
-    PubSub.subscribe( 'test', this.mySubscriber );
+    PubSub.subscribe( this.state.topic, this.sendNewData );
     //this.on("test", console.log("received test event"));
   };
 

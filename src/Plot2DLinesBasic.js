@@ -45,8 +45,10 @@ class Plot2DLinesBasic extends React.Component {
     };
 
     // create a function to subscribe to topics
-    this.mySubscriber = function (msg, data) {
+    this.receiveNewData = function (msg, data) {
       console.log("from Plot2DLinesBasic Listener: " + data );
+      //parse out the data
+
     };
 
     this.updateComponent = function (){
@@ -75,7 +77,7 @@ class Plot2DLinesBasic extends React.Component {
 
   componentDidMount() {
     console.log("mounted Plot2DLinesBasic"); //tell us it mounted
-    PubSub.subscribe( 'test', this.mySubscriber );
+    PubSub.subscribe( this.state.topic, this.receiveNewData );
     //this.on("test", console.log("received test event"));
   };
 
