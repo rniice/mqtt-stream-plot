@@ -1,43 +1,28 @@
 import React from 'react';
 import MQTT from 'mqtt';
-import _ from 'lodash';
-
 import { Button } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-
-import EventEmitter from 'eventemitter3';
+import PubSub from 'pubsub-js';
 
 class MQTTListener extends React.Component {
 
   constructor(props) {
 
     super(props);
-    this.transferData = this.props.transferData;
-
 
     //reference to object for callbacks
     var that = this;
 
-    //initiate the event emitter
-    this.eventEmitter = new EventEmitter();
-
-    this.on = function(eventName, listener) {
-       that.eventEmitter.on(eventName, listener);
-    };
-
-    this.emit = function(event, payload, error = false) {
-      //console.log("emitting event: " + event);
-      that.eventEmitter.emit(event, payload, error);
-    };
-
-    this.getEventEmitter = function() {
-      return that.eventEmitter;
-    };
 
     this.state = {
       host:             props.host,
       topic:            props.topic,
       message:          null
+    };
+
+    // create a function to subscribe to topics
+    this.mySubscriber = function (msg, data) {
+        console.log("from MQTT Listener: " + data );
     };
 
     this.client         = MQTT.connect(this.state.host);
@@ -51,12 +36,18 @@ class MQTTListener extends React.Component {
 
     this.client.on('message', function(topic, message){
       that.setState({message: message.toString()});
-      //emit the event out for new data
-      //that.emit("test", message.toString());
-      that.transferData(message.toString());
+
+      // publish a topic asyncronously
+      PubSub.publish( 'test', message.toString() );
     });
 
   }
+
+  componentDidMount() {
+    console.log("mounted MQTTListener"); //tell us it mounted
+    PubSub.subscribe( 'test', this.mySubscriber );
+    //this.on("test", console.log("received test event"));
+  };
 
   render() {
 
