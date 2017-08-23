@@ -12,9 +12,27 @@ class MQTTListener extends React.Component {
   constructor(props) {
 
     super(props);
+    this.transferData = this.props.transferData;
+
+
+    //reference to object for callbacks
+    var that = this;
 
     //initiate the event emitter
     this.eventEmitter = new EventEmitter();
+
+    this.on = function(eventName, listener) {
+       that.eventEmitter.on(eventName, listener);
+    };
+
+    this.emit = function(event, payload, error = false) {
+      //console.log("emitting event: " + event);
+      that.eventEmitter.emit(event, payload, error);
+    };
+
+    this.getEventEmitter = function() {
+      return that.eventEmitter;
+    };
 
     this.state = {
       host:             props.host,
@@ -24,9 +42,6 @@ class MQTTListener extends React.Component {
 
     this.client         = MQTT.connect(this.state.host);
 
-    //reference to object for callbacks
-    var that = this;
-
     this.client.on('connect', function(){
       //this is within the client scope
       console.log("connection established: " + that.state.host);
@@ -35,8 +50,10 @@ class MQTTListener extends React.Component {
     });
 
     this.client.on('message', function(topic, message){
-      //console.log("topic: " + topic.toString() + "message: " + message.toString());
       that.setState({message: message.toString()});
+      //emit the event out for new data
+      //that.emit("test", message.toString());
+      that.transferData(message.toString());
     });
 
   }
@@ -46,7 +63,7 @@ class MQTTListener extends React.Component {
     var data_header = [ { host: this.state.host, topic: this.state.topic } ];
     var data_sensors_json = JSON.parse(this.state.message);
     var data_sensors = null;
-    console.log(data_sensors_json);
+    //console.log(data_sensors_json);
 
     if(data_sensors_json){
       data_sensors = [
@@ -68,12 +85,12 @@ class MQTTListener extends React.Component {
 
     return (
       <div>
-        <BootstrapTable data={ data_header } cellEdit={ cellEditProp } insertRow={ false } style={ tableStyle }>
+        <BootstrapTable width={ 300 } data={ data_header } cellEdit={ cellEditProp } insertRow={ false } style={ tableStyle }>
             <TableHeaderColumn dataField='host' isKey={ true }>Broker</TableHeaderColumn>
             <TableHeaderColumn dataField='topic' editable={ false }>Topic</TableHeaderColumn>
         </BootstrapTable>
 
-        <BootstrapTable data={ data_sensors } cellEdit={ cellEditProp } insertRow={ false } style={ tableStyle }>
+        <BootstrapTable width={ 300 } data={ data_sensors } cellEdit={ cellEditProp } insertRow={ false } style={ tableStyle }>
             <TableHeaderColumn dataField='sensor' isKey={ true }>Sensor</TableHeaderColumn>
             <TableHeaderColumn dataField='temp' editable={ false }>Temp [degC]</TableHeaderColumn>
             <TableHeaderColumn dataField='hum'>Humidity</TableHeaderColumn>

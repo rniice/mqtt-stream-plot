@@ -8,14 +8,40 @@ const PlotlyComponent = createPlotlyComponent(Plotly);
 class Plot2DLinesBasic extends React.Component {
 
   constructor(props) {
-
     super(props);
+    this.transferData = this.props.transferData;
+
+    //reference to object for callbacks
+    var that = this;
 
     //initiate the event emitter
     this.eventEmitter = new EventEmitter();
 
+    this.testMessage = function(){
+      console.log("test message received!")
+    }
+
+    this.on = function(eventName, listener) {
+       that.eventEmitter.on(eventName, listener);
+    };
+
+    this.emit = function(event, payload, error = false) {
+      //console.log("emitting event");
+      that.eventEmitter.emit(event, payload, error);
+    };
+
+    /*
+    this.removeEventListener = function(eventName, listener) {
+      that.eventEmitter.removeListener(eventName, listener);
+    };
+
+    this.getEventEmitter = function() {
+      return that.eventEmitter;
+    };
+    */
+
     this.state = {
-      mqtt_topic:       props.mqtt_topic,
+      topic:            props.topic,
       range_x:          props.range_x,
       range_y:          props.range_y,
       line_color:       props.line_color,
@@ -44,9 +70,10 @@ class Plot2DLinesBasic extends React.Component {
       config: null
     };
 
+    this.on('test', console.log("new data received"));
+
 
     this.updateComponent = function (){
-      var that = this;
       setInterval(function(){
         var next_state = that.state;
         next_state.trace1.y.push(Math.random() * (10-8) + 8);
@@ -69,13 +96,24 @@ class Plot2DLinesBasic extends React.Component {
 
   }
 
+  // Listen for event
+  /*componentWillMount() {
+    this.on('test', console.log("detected test event"));
+  }
+
+  //Remove listener
+  componentWillUnmount(){
+    this.removeListener('TODO_ADDED', this.addEvent);
+  }
+  */
+
   render() {
     let data_plot =  [this.state.trace1, this.state.trace2];
     let layout = this.state.layout;
 
     return (
       <div>
-        {/*<p>Plot MQTT Topic is: {this.state.mqtt_topic} </p>
+        {/*<p>Plot MQTT Topic is: {this.state.topic} </p>
         <p>Plot RangeX is: {this.state.range_x.toString()} </p>
         <p>Plot RangeY is: {this.state.range_y.toString()} </p>
         <p>Plot Stroke Color is: {this.state.line_color} </p>*/}
