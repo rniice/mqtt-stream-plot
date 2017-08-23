@@ -36,11 +36,13 @@ class App extends Component {
 
         <MQTTListener
           host={'ws://scottydb.vcs.rd.hpicorp.net:8083'}
-          topic={'/Transporter/Live/vulcanbb1xm002/Status/Data'}
+          topic={'/Transporter/Live/Dataq/UA74A11014/Status/Data'}
+          device={'dataq_1'}
+          sensors={['a1','a2','a3','a4','a5','a6','a7','a8']}
         />
 
         <Plot2DLinesBasic
-          topic="/Transporter/Live/vulcanbb1xm002/Status/Data"
+          topic="/Transporter/Live/Dataq/UA74A11014/Status/Data"
           range_x={[0,300]}
           range_y={[0,10]}
           line_color={'#FF0'}

@@ -35,7 +35,8 @@ class Plot2DLinesBasic extends React.Component {
       trace2: {
         /*x: [1, 2, 3, 4],*/
         y: [],
-        type: 'scatter'
+        type: 'scatter',
+        name: 'woot2'
       },
       layout: {
         xaxis: {range: [props.range_x[0], props.range_x[1]] /*, autorange: true */},
