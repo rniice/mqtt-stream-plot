@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Plot2DLinesBasic from './Plot2DLinesBasic';
+import Plot2DLinesBasicRandom from './Plot2DLinesBasicRandom';
 import MQTTListener from './MQTTListener';
 import { Button } from 'react-bootstrap';
 import PubSub from 'pubsub-js';
@@ -42,6 +43,15 @@ class App extends Component {
         />
 
         <Plot2DLinesBasic
+          topic="/Transporter/Live/Dataq/UA74A11014/Status/Data"
+          range_x={[0,300]}
+          range_y={[0,10]}
+          line_color={'#FF0'}
+          data_points_show={300}
+          sensors={['a1','a2','a3','a4','a5','a6','a7','a8']}
+        />
+
+        <Plot2DLinesBasicRandom
           topic="/Transporter/Live/Dataq/UA74A11014/Status/Data"
           range_x={[0,300]}
           range_y={[0,10]}
